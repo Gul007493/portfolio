@@ -51,7 +51,7 @@ section{position:relative}
 
 /* grain */
 /* зерно — статичная картинка: без SVG-фильтра и без постоянной перерисовки (иначе Chrome теряет слои) */
-.grain{position:fixed;inset:0;z-index:90;pointer-events:none;opacity:.06;background:url(images/grain.png) repeat}
+.grain{position:fixed;inset:0;z-index:90;pointer-events:none;opacity:.07;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E")}
 
 /* buttons */
 .btn{position:relative;display:inline-flex;align-items:center;justify-content:center;gap:10px;min-height:54px;padding:0 26px;font-weight:500;font-size:15px;letter-spacing:.14em;text-transform:uppercase;border-radius:999px;transition:background .35s var(--ease),color .35s var(--ease),border-color .35s;white-space:nowrap}
