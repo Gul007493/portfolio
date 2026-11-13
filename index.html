@@ -196,7 +196,7 @@ section{position:relative}
 .tab{flex:none;min-height:44px;padding:0 18px;border:1px solid var(--line);border-radius:999px;font-weight:400;font-size:14px;letter-spacing:.12em;text-transform:uppercase;color:var(--mute);transition:all .3s}
 .tab[aria-selected="true"]{background:var(--red);border-color:var(--red);color:#fff}
 .dishes{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-top:22px;min-height:400px}
-.dish{position:relative;display:flex;flex-direction:column;text-align:left;background:var(--bg2);border:1px solid var(--line);overflow:hidden;transition:border-color .4s,transform .5s var(--ease)}
+.dish{position:relative;display:flex;flex-direction:column;text-align:left;background:var(--bg2);border:1px solid var(--line);overflow:hidden;transition:border-color .4s}
 .dish:hover{border-color:rgba(239,231,220,.32)}
 .dish__ph{position:relative;aspect-ratio:1/1;overflow:hidden;background:var(--bg3)}
 .dish__ph img{width:100%;height:100%;object-fit:cover;transition:transform 1s var(--ease)}
@@ -244,8 +244,9 @@ section{position:relative}
 .chip{display:inline-flex;align-items:center;gap:8px;min-height:38px;padding:0 14px;border:1px solid var(--line);border-radius:999px;font-size:13px;letter-spacing:.12em;text-transform:uppercase;color:var(--mute)}
 .chip--red{border-color:var(--red);color:var(--fg)}
 .tags{display:grid;grid-template-columns:1fr 1fr;gap:22px 14px;margin-top:44px}
-.ptag{position:relative;background:var(--paper);color:var(--ink);padding:10px 10px 14px;transform:rotate(var(--r,0deg));transition:transform .6s var(--ease);box-shadow:0 14px 30px rgba(0,0,0,.35)}
-.ptag:hover{transform:rotate(0deg) translateY(-6px)}
+.ptag{position:relative;background:var(--paper);color:var(--ink);padding:10px 10px 14px;transform:rotate(var(--r,0deg));box-shadow:0 14px 30px rgba(0,0,0,.35)}
+.ptag.is-in{transition:transform .6s var(--ease)}
+.ptag.is-in:hover{transform:rotate(0deg) translateY(-6px)}
 .ptag::before{content:"";position:absolute;left:50%;top:-30px;width:1px;height:38px;background:linear-gradient(rgba(239,231,220,0),rgba(239,231,220,.55));z-index:2}
 .ptag__hole{position:absolute;left:50%;top:7px;width:10px;height:10px;margin-left:-5px;border-radius:50%;background:var(--bg);box-shadow:inset 0 1px 2px rgba(0,0,0,.6);z-index:3}
 .ptag__ph{aspect-ratio:4/3;overflow:hidden;margin-top:16px;background:#d9cfbf}
@@ -1579,16 +1580,19 @@ function initScroll() {
   /* HERO: слово «МЯСО», залитое стейком, раскрывается в кадр */
   mm.add({ mob: '(max-width:1023px)', desk: '(min-width:1024px)' }, ctx => {
     const mob = ctx.conditions.mob;
-    gsap.set('#heroPhoto', { clipPath: 'inset(0% 0% 0% 0%)' });
-    const tl = gsap.timeline({ scrollTrigger: { trigger: '#hero', start: 'top top', end: '+=' + (mob ? 130 : 150) + '%', pin: true, scrub: .6, anticipatePin: 1 } });
+    /* мягко: слово чуть растёт и растворяется, а фото раскрывается «окном» из его места */
+    gsap.set('#heroPhoto', { clipPath: mob ? 'inset(36% 4% 36% 4% round 28px)' : 'inset(30% 14% 30% 14% round 36px)' });
+    gsap.set('#heroPhoto img, #heroPhoto video', { scale: 1.12 });
+    const tl = gsap.timeline({ scrollTrigger: { trigger: '#hero', start: 'top top', end: '+=' + (mob ? 150 : 170) + '%', pin: true, scrub: 1.2, anticipatePin: 1 } });
     tl.to('#heroHint', { opacity: 0, duration: .1 }, 0)
-      .to('.hero__eyebrow, .hero__tag, .hero__sub, .hero__cta, .hero__meta', { opacity: 0, y: -50, stagger: .02, duration: .25 }, 0)
-      .to('#heroWord', { scale: mob ? 9 : 12, duration: .55, ease: 'power2.in' }, 0)
-      .to('#heroPhoto', { opacity: 1, duration: .25 }, .22)
-      .to('#heroWord', { opacity: 0, duration: .1 }, .5)
-      .to('#heroPhoto img, #heroPhoto video', { scale: 1, duration: .8, ease: 'none' }, .2)
-      .to('#heroPhoto', { clipPath: mob ? 'inset(16% 6% 30% 6%)' : 'inset(14% 26% 22% 26%)', duration: .4, ease: 'power2.inOut' }, .62)
-      .fromTo('#heroCap', { opacity: 0, y: 60 }, { opacity: 1, y: 0, duration: .3 }, .72);
+      .to('.hero__eyebrow, .hero__tag, .hero__sub, .hero__cta, .hero__meta', { opacity: 0, y: -40, stagger: .02, duration: .25, ease: 'power1.in' }, 0)
+      .to('#heroWord', { scale: 1.35, duration: .5, ease: 'sine.inOut' }, 0)
+      .to('#heroWord', { opacity: 0, duration: .22, ease: 'sine.inOut' }, .2)
+      .to('#heroPhoto', { opacity: 1, duration: .3, ease: 'sine.inOut' }, .12)
+      .to('#heroPhoto', { clipPath: 'inset(0% 0% 0% 0% round 0px)', duration: .38, ease: 'sine.inOut' }, .14)
+      .to('#heroPhoto img, #heroPhoto video', { scale: 1, duration: .9, ease: 'none' }, .1)
+      .to('#heroPhoto', { clipPath: mob ? 'inset(16% 6% 30% 6% round 20px)' : 'inset(14% 26% 22% 26% round 24px)', duration: .36, ease: 'sine.inOut' }, .6)
+      .fromTo('#heroCap', { opacity: 0, y: 40 }, { opacity: 1, y: 0, duration: .3, ease: 'power2.out' }, .72);
     return () => {};
   });
 
@@ -1614,7 +1618,10 @@ function initScroll() {
   gsap.from('#cutlist li', { x: 40, opacity: 0, stagger: .06, duration: .7, ease: 'power3.out', scrollTrigger: { trigger: '#cutlist', start: 'top 85%' } });
 
   /* Меню: карточки */
-  ScrollTrigger.batch('.dish', { start: 'top 92%', once: true, onEnter: b => gsap.fromTo(b, { y: 50, opacity: 0 }, { y: 0, opacity: 1, stagger: .07, duration: .8, ease: 'power3.out' }) });
+  /* карточки скрыты заранее — иначе видны, потом гаснут и снова появляются */
+  const dropDish = b => gsap.to(b, { y: 0, opacity: 1, stagger: .09, duration: 1.1, ease: 'power3.out', overwrite: true });
+  gsap.set('.dish', { y: -36, opacity: 0 });
+  ScrollTrigger.batch('.dish', { start: 'top 95%', end: 'bottom -500%', once: true, onEnter: dropDish, onEnterBack: dropDish });
 
   /* Вечер: закреплённые кадры, смена через диагональный «разрез» */
   const frames = $$('.frame');
@@ -1633,7 +1640,15 @@ function initScroll() {
   etl.to({}, { duration: .3 });
 
   /* Бутик: бирки качаются при появлении */
-  ScrollTrigger.batch('.ptag', { start: 'top 92%', once: true, onEnter: b => gsap.fromTo(b, { y: -60, opacity: 0, rotation: (i) => (i % 2 ? 8 : -8) }, { y: 0, opacity: 1, rotation: (i, n) => parseFloat(getComputedStyle(n).getPropertyValue('--r')) || 0, stagger: .08, duration: 1.1, ease: 'elastic.out(1,.6)', clearProps: 'transform' }) });
+  /* бирка плавно спускается на нитке и затухающе покачивается */
+  const rOf = n => parseFloat(getComputedStyle(n).getPropertyValue('--r')) || 0;
+  gsap.set('.ptag', { y: -70, opacity: 0, rotation: (i, n) => rOf(n) + (i % 2 ? 7 : -7), transformOrigin: '50% 0%' });
+  const dropTag = b => b.forEach((n, i) => {
+    const d = i * .1;
+    gsap.to(n, { y: 0, opacity: 1, duration: 1.2, delay: d, ease: 'power3.out', overwrite: 'auto' });
+    gsap.to(n, { rotation: rOf(n), duration: 2.4, delay: d, ease: 'elastic.out(1,.35)', overwrite: 'auto', onComplete: () => { gsap.set(n, { clearProps: 'transform' }); n.classList.add('is-in'); } });
+  });
+  ScrollTrigger.batch('.ptag', { start: 'top 95%', end: 'bottom -500%', once: true, onEnter: dropTag, onEnterBack: dropTag });
 
   /* Кадры: горизонтальная закреплённая лента */
   const track = $('#track');
