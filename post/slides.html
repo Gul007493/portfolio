@@ -1,0 +1,128 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=1080">
+<title>Карусель — Мясной Двор</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@1,500;1,600&family=Oswald:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+/* Слайды карусели Instagram 1080×1350. Открыть slides.html?n=1 … ?n=8 — один слайд на экран (так их снимаю в PNG). */
+:root{--bg:#0d0b0a;--fg:#efe7dc;--mute:rgba(239,231,220,.62);--red:#e3120b;--red2:#ff2a1f;--line:rgba(239,231,220,.14)}
+*{box-sizing:border-box;margin:0;padding:0}
+html,body{background:#000}
+body{font-family:'Oswald',sans-serif;color:var(--fg)}
+.slide{position:relative;width:1080px;height:1350px;overflow:hidden;background:var(--bg);display:none}
+.slide.on{display:block}
+.slide::after{content:"";position:absolute;inset:0;background:url(../images/grain.png);opacity:.06;pointer-events:none}
+.it{font-family:'Cormorant Garamond',serif;font-style:italic;font-weight:500;letter-spacing:0;text-transform:none}
+.top{position:absolute;left:72px;right:72px;top:64px;display:flex;justify-content:space-between;align-items:center;font-size:22px;letter-spacing:.24em;text-transform:uppercase;color:var(--mute);z-index:3}
+.top b{color:var(--red2);font-weight:500}
+.num{font-variant-numeric:tabular-nums}
+.h{position:absolute;left:72px;right:72px;z-index:3;font-weight:700;text-transform:uppercase;line-height:1.02;letter-spacing:-.01em}
+.h .it{color:var(--red2);font-size:.68em}
+.p{position:absolute;left:72px;right:72px;z-index:3;font-weight:300;font-size:34px;line-height:1.35;color:var(--mute)}
+.p b{color:var(--fg);font-weight:500}
+.swipe{position:absolute;right:72px;bottom:64px;z-index:3;font-size:22px;letter-spacing:.24em;text-transform:uppercase;color:var(--mute);display:flex;align-items:center;gap:14px}
+.swipe i{width:60px;height:2px;background:var(--red)}
+/* рамки */
+.browser{position:absolute;z-index:2;border-radius:18px;overflow:hidden;background:#141110;box-shadow:0 40px 90px rgba(0,0,0,.6),0 0 0 1px rgba(255,255,255,.08)}
+.browser .bar{height:38px;display:flex;align-items:center;gap:9px;padding:0 16px;background:#1c1816}
+.browser .bar i{width:12px;height:12px;border-radius:50%;background:#3a332f}
+.browser .bar i:first-child{background:#e3120b}
+.browser .bar span{margin-left:14px;flex:1;height:22px;border-radius:11px;background:#2a2421;font-size:13px;line-height:22px;padding-left:12px;color:rgba(239,231,220,.45);letter-spacing:.06em}
+.browser img{display:block;width:100%}
+.phone{position:absolute;z-index:2;width:330px;border-radius:52px;padding:12px;background:#0a0908;box-shadow:0 40px 90px rgba(0,0,0,.65),0 0 0 2px #2a2421 inset,0 0 0 1px rgba(255,255,255,.06)}
+.phone img{display:block;width:100%;border-radius:40px}
+.phone::before{content:"";position:absolute;left:50%;top:22px;width:96px;height:26px;margin-left:-48px;border-radius:14px;background:#000;z-index:2}
+.chip{display:inline-flex;align-items:center;gap:10px;height:54px;padding:0 24px;border:1px solid var(--line);border-radius:999px;font-size:24px;letter-spacing:.12em;text-transform:uppercase;color:var(--mute);margin:0 10px 12px 0}
+.chip--red{background:var(--red);border-color:var(--red);color:#fff}
+.glow{position:absolute;z-index:1;border-radius:50%;background:radial-gradient(circle,rgba(227,18,11,.28),transparent 65%)}
+
+/* 1 — обложка */
+.cover-word{position:absolute;left:0;right:0;top:470px;z-index:2;text-align:center;font-weight:700;text-transform:uppercase;font-size:400px;line-height:.86;letter-spacing:-.02em;background:url(../images/scene/hero-tbone.jpg) 50% 50%/cover;-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;padding-top:.06em}
+.cover-tag{position:absolute;left:0;right:0;top:380px;text-align:center;font-size:110px;color:var(--red2);z-index:3}
+</style>
+</head>
+<body>
+
+<!-- 1. Обложка -->
+<section class="slide" data-n="1">
+  <div class="top"><span>Концепт · Караганда</span><span class="num"><b>01</b> / 08</span></div>
+  <div class="glow" style="width:1100px;height:1100px;left:-10px;top:250px"></div>
+  <div class="h" style="top:150px;font-size:96px">Сайт <span class="it">для</span> стейкхауса</div>
+  <div class="cover-tag it">настоящее</div>
+  <div class="cover-word">Мясо</div>
+  <div class="p" style="top:1000px;text-align:center;font-size:36px">«Мясной Двор» — стейкхаус, спорт-бар<br>и мясной бутик в одном сайте</div>
+  <div class="swipe">Листай <i></i></div>
+</section>
+
+<!-- 2. Первый экран -->
+<section class="slide" data-n="2">
+  <div class="top"><span>Первый экран</span><span class="num"><b>02</b> / 08</span></div>
+  <div class="h" style="top:150px;font-size:92px">Вау <span class="it">с первой</span><br>секунды</div>
+  <div class="browser" style="left:72px;right:72px;top:420px"><div class="bar"><i></i><i></i><i></i><span>myasnoy-dvor.kz</span></div><img src="shots/d_hero.jpg" alt=""></div>
+  <div class="p" style="top:1095px">Огромное <b>«МЯСО»</b>, залитое фото стейка. При скролле слово раскрывается в кадр, а кадр сжимается в рамку.</div>
+</section>
+
+<!-- 3. Мобильная версия -->
+<section class="slide" data-n="3">
+  <div class="top"><span>Mobile-first</span><span class="num"><b>03</b> / 08</span></div>
+  <div class="h" style="top:150px;font-size:92px">Сначала <span class="it">для</span><br>телефона</div>
+  <div class="glow" style="width:900px;height:900px;left:90px;top:400px"></div>
+  <div class="phone" style="left:40px;top:470px;transform:rotate(-6deg)"><img src="shots/m_cuts.jpg" alt=""></div>
+  <div class="phone" style="left:375px;top:410px;z-index:3"><img src="shots/m_hero.jpg" alt=""></div>
+  <div class="phone" style="left:710px;top:470px;transform:rotate(6deg)"><img src="shots/m_menu.jpg" alt=""></div>
+</section>
+
+<!-- 4. Схема разделки -->
+<section class="slide" data-n="4">
+  <div class="top"><span>Главная фишка</span><span class="num"><b>04</b> / 08</span></div>
+  <div class="h" style="top:150px;font-size:92px">Выбери <span class="it">свой</span><br>отруб</div>
+  <div class="browser" style="left:72px;right:72px;top:420px"><div class="bar"><i></i><i></i><i></i><span>myasnoy-dvor.kz/#cuts</span></div><img src="shots/d_cuts.jpg" alt=""></div>
+  <div class="p" style="top:1095px">Интерактивная схема туши: тапаешь отруб — раскрывается карточка: <b>рибай, T-bone, рёбра</b>, вес и цена.</div>
+</section>
+
+<!-- 5. Карточка -->
+<section class="slide" data-n="5">
+  <div class="top"><span>Карточки блюд</span><span class="num"><b>05</b> / 08</span></div>
+  <div class="h" style="top:150px;font-size:92px">Меню <span class="it">без</span><br>PDF и QR</div>
+  <div class="browser" style="left:72px;right:72px;top:420px"><div class="bar"><i></i><i></i><i></i><span>myasnoy-dvor.kz</span></div><img src="shots/d_sheet.jpg" alt=""></div>
+  <div class="p" style="top:1095px">Каждое блюдо открывается <b>полноэкранной карточкой</b> прямо из места клика. Фото, состав, вес, цена — и кнопка брони.</div>
+</section>
+
+<!-- 6. Вечер / матч -->
+<section class="slide" data-n="6">
+  <div class="top"><span>Сцены вечера</span><span class="num"><b>06</b> / 08</span></div>
+  <div class="h" style="top:150px;font-size:92px">19:00 → 21:00<br><span class="it">→ матч</span></div>
+  <div class="browser" style="left:72px;right:72px;top:420px"><div class="bar"><i></i><i></i><i></i><span>myasnoy-dvor.kz/#evening</span></div><img src="shots/d_match.jpg" alt=""></div>
+  <div class="p" style="top:1095px">Закреплённые сцены меняются «разрезом ножа». Последний кадр — <b>LED-табло спорт-бара</b> с афишей матчей.</div>
+</section>
+
+<!-- 7. Бронь-чек -->
+<section class="slide" data-n="7">
+  <div class="top"><span>Заявка</span><span class="num"><b>07</b> / 08</span></div>
+  <div class="h" style="top:150px;font-size:92px">Бронь — <span class="it">это</span><br>мясницкий чек</div>
+  <div class="glow" style="width:800px;height:800px;left:400px;top:380px"></div>
+  <div class="phone" style="left:610px;top:420px"><img src="shots/m_book.jpg" alt=""></div>
+  <div class="p" style="top:470px;right:520px;font-size:33px">Гость заполняет чек: дата, время, гости, повод.<br><br>Чек «пробивается» и уходит администратору <b>в WhatsApp с готовым текстом</b>.<br><br>Без звонков и переписки.</div>
+</section>
+
+<!-- 8. Призыв -->
+<section class="slide" data-n="8">
+  <div class="top"><span>Студия веб-дизайна</span><span class="num"><b>08</b> / 08</span></div>
+  <div class="glow" style="width:1200px;height:1200px;left:-60px;top:150px"></div>
+  <div class="h" style="top:220px;font-size:118px;line-height:1.16">Хочешь <span class="it">такой же</span><br>сайт?</div>
+  <div class="p" style="top:560px">
+    <span class="chip">Своя идея под бизнес</span><span class="chip">Скролл-анимации</span><span class="chip">Mobile-first</span><span class="chip">Меню с ценами</span><span class="chip">Бронь в WhatsApp</span><span class="chip">RU / ҚАЗ</span><span class="chip">SEO</span>
+  </div>
+  <div class="h" style="top:860px;font-size:64px;line-height:1.1">Пиши в директ —<br><span class="it" style="font-size:1em">сделаю для твоего заведения</span></div>
+  <div class="p" style="top:1210px;font-size:24px;letter-spacing:.14em;text-transform:uppercase;color:rgba(239,231,220,.38)">Концепт · название и данные вымышлены</div>
+</section>
+
+<script>
+const n = new URLSearchParams(location.search).get('n');
+document.querySelectorAll('.slide').forEach(s => { if (!n || s.dataset.n === n) s.classList.add('on'); });
+if (!n) document.body.style.cssText = 'display:grid;gap:40px;justify-content:center;padding:40px';
+</script>
+</body>
+</html>
